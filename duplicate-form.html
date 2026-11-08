@@ -1,0 +1,51 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Duplicate Field Test</title>
+</head>
+<body>
+    <!-- Decoy fields -->
+    <div>
+        <label for="fake_name">First Name</label>
+        <input id="fake_name" type="text">
+    </div>
+
+    <div>
+        <label>Gender</label>
+        <input type="radio" id="fake_female" name="fake_gender">
+        <span>Female</span>
+    </div>
+
+    <div>
+        <label for="fake_state">State</label>
+        <select id="fake_state">
+            <option>India</option>
+        </select>
+    </div>
+
+    <hr>
+
+    <!-- Actual form -->
+    <form>
+        <div>
+            <label for="real_name">First Name</label>
+            <input id="real_name" type="text">
+        </div>
+
+        <div>
+            <label>Gender</label>
+            <input type="radio" id="real_female" name="real_gender">
+            <span>Female</span>
+        </div>
+
+        <div>
+            <label for="real_state">State</label>
+            <select id="real_state">
+                <option>-- Select Country --</option>
+                <option>India</option>
+            </select>
+        </div>
+    </form>
+</body>
+</html>

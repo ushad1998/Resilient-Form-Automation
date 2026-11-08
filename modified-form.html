@@ -1,0 +1,41 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Modified Automation Form</title>
+</head>
+<body>
+    <form>
+        <!-- State comes first now -->
+        <div>
+            <label for="country_new">State</label>
+            <select id="country_new" name="country_new">
+                <option>-- Select Country --</option>
+                <option>India</option>
+                <option>USA</option>
+            </select>
+        </div>
+
+        <!-- Gender comes second -->
+        <div>
+            <label>Gender</label>
+            <div>
+                <input type="radio" id="gender_f" name="sex_new" value="Female">
+                <span>Female</span>
+
+                <input type="radio" id="gender_m" name="sex_new" value="Male">
+                <span>Male</span>
+            </div>
+        </div>
+
+        <!-- First Name comes last, with changed attributes -->
+        <div>
+            <label for="person_name">First Name</label>
+            <input id="person_name"
+                   name="person_name"
+                   type="text"
+                   placeholder="Enter your name">
+        </div>
+    </form>
+</body>
+</html>

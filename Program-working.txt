@@ -1,0 +1,90 @@
+
+using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Support.UI;
+using OpenQA.Selenium.Support;
+
+string url = Environment.GetEnvironmentVariable("FORM_URL")
+    ?? "https://app.cloudqa.io/home/AutomationPracticeForm";
+
+var options = new ChromeOptions();
+options.AddArgument("--start-maximized");
+options.PageLoadStrategy = PageLoadStrategy.Eager;
+
+using IWebDriver driver = new ChromeDriver(options);
+
+driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(2);
+driver.Navigate().GoToUrl(url);
+
+var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
+
+try
+{
+    // 1. Find First Name using semantic attributes, not a fixed ID.
+    IWebElement firstName = wait.Until(d =>
+        d.FindElements(By.TagName("input"))
+         .FirstOrDefault(e =>
+             e.Displayed &&
+             e.GetAttribute("type") == "text" &&
+             (
+                 (e.GetAttribute("name") ?? "")
+                     .Equals("First Name", StringComparison.OrdinalIgnoreCase)
+                 ||
+                 (e.GetAttribute("placeholder") ?? "")
+                     .Equals("Name", StringComparison.OrdinalIgnoreCase)
+             )
+         )
+    )!;
+
+    firstName.Clear();
+    firstName.SendKeys("Usha");
+
+    // 2. Find and select the Female radio button.
+    IWebElement female = wait.Until(d =>
+        d.FindElements(By.TagName("input"))
+         .FirstOrDefault(e =>
+             e.Displayed &&
+             e.GetAttribute("type") == "radio" &&
+             (e.GetAttribute("value") ?? "")
+                 .Equals("Female", StringComparison.OrdinalIgnoreCase)
+         )
+    )!;
+
+    female.Click();
+
+    // 3. Find the State dropdown by its semantic name.
+    IWebElement stateElement = wait.Until(d =>
+        d.FindElements(By.TagName("select"))
+         .FirstOrDefault(e =>
+             e.Displayed &&
+             (e.GetAttribute("name") ?? "")
+                 .Equals("State", StringComparison.OrdinalIgnoreCase)
+         )
+    )!;
+
+    var stateDropdown = new SelectElement(stateElement);
+    stateDropdown.SelectByText("India");
+
+    // 4. Verify all three fields.
+    bool namePassed = firstName.GetAttribute("value") == "Usha";
+    bool genderPassed = female.Selected;
+    bool statePassed = stateDropdown.SelectedOption.Text.Trim() == "India";
+
+    Console.WriteLine("\n--- AUTOMATION RESULTS ---");
+    Console.WriteLine($"First Name: {(namePassed ? "PASS" : "FAIL")}");
+    Console.WriteLine($"Gender:     {(genderPassed ? "PASS" : "FAIL")}");
+    Console.WriteLine($"State:      {(statePassed ? "PASS" : "FAIL")}");
+
+    Console.WriteLine("\nPress Enter to close the browser.");
+    Console.ReadLine();
+}
+catch (Exception ex)
+{
+    Console.WriteLine("AUTOMATION FAILED: " + ex.Message);
+    Console.WriteLine("Press Enter to close the browser.");
+    Console.ReadLine();
+}
+finally
+{
+    driver.Quit();
+}
