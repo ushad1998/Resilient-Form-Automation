@@ -6,6 +6,12 @@ This project automates the CloudQA Automation Practice Form using C# and Seleniu
 
 The automation identifies form fields using their visible labels and HTML relationships instead of depending entirely on fixed IDs, names, or CSS classes.
 
+## Screenshots
+<img src="Screenshots/Screenshot (149).png" width="500" height="300" alt="Screenshot 40">
+<img src="Screenshots/Screenshot (147).png" width="500" height="300" alt="Screenshot 40">
+<img src="Screenshots/Screenshot (146).png" width="500" height="300" alt="Screenshot 40">
+<img src="Screenshots/Screenshot (141).png" width="500" height="300" alt="Screenshot 40">
+
 ## Website
 
 Default URL:  
